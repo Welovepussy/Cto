@@ -142,22 +142,8 @@ h1, h2, h3 {
     color: #ff4b5c;
     text-decoration: none;
     margin: 0 10px;
-    font-size: 1.2rem;
 }
 
-.footer p {
-    font-size: 1rem;
-    color: #888;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .features {
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    .feature {
-        width: 80%;
-    }
+.footer .social-links a:hover {
+    color: #e04b5c;
 }
