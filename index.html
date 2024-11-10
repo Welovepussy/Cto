@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Token Website</title>
+    <title>TokenX Website</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -21,19 +21,29 @@
 
     <!-- Features Section -->
     <section id="features" class="features">
-        <div class="feature">
+        <div class="feature fade-in">
             <h3>Fast Transactions</h3>
             <p>Our token is designed for fast, secure, and efficient transactions.</p>
         </div>
-        <div class="feature">
+        <div class="feature fade-in">
             <h3>Global Community</h3>
-            <p>Join millions of people around the world in our thriving ecosystem.</p>
+            <p class="counter">0</p> <!-- Dynamic counter starts at 0 -->
         </div>
-        <div class="feature">
+        <div class="feature fade-in">
             <h3>Low Fees</h3>
             <p>Experience minimal fees with a revolutionary blockchain system.</p>
         </div>
     </section>
+
+    <!-- Modal Popup -->
+    <button id="openModal">Show Announcement</button>
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span id="closeModal" class="close">&times;</span>
+            <h2>Important Announcement</h2>
+            <p>Join our community and stay updated with the latest news.</p>
+        </div>
+    </div>
 
     <!-- Footer Section -->
     <footer class="footer">
@@ -44,6 +54,63 @@
         </div>
         <p>&copy; 2024 TokenX. All rights reserved.</p>
     </footer>
+
+    <!-- JavaScript for Animations, Counter, and Modal -->
+    <script>
+        // Scroll Animation
+        document.addEventListener('scroll', function() {
+            const elements = document.querySelectorAll('.fade-in');
+            const windowHeight = window.innerHeight;
+
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                if (elementTop < windowHeight - 100) {
+                    element.classList.add('visible');
+                }
+            });
+        });
+
+        // Dynamic Counter
+        function animateCounter(element, endValue) {
+            let startValue = 0;
+            const duration = 2000;
+            const increment = endValue / (duration / 16);
+
+            const counter = setInterval(() => {
+                startValue += increment;
+                element.innerText = Math.floor(startValue);
+                if (startValue >= endValue) {
+                    clearInterval(counter);
+                    element.innerText = endValue;
+                }
+            }, 16);
+        }
+
+        document.addEventListener('scroll', function() {
+            const counterElement = document.querySelector('.counter');
+            const position = counterElement.getBoundingClientRect().top;
+            const windowHeight = window.innerHeight;
+
+            if (position < windowHeight - 100 && counterElement.innerText === '0') {
+                animateCounter(counterElement, 10000); // Set your target number here
+            }
+        });
+
+        // Modal Popup
+        document.getElementById('openModal').onclick = function() {
+            document.getElementById('myModal').style.display = 'block';
+        };
+
+        document.getElementById('closeModal').onclick = function() {
+            document.getElementById('myModal').style.display = 'none';
+        };
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('myModal')) {
+                document.getElementById('myModal').style.display = 'none';
+            }
+        };
+    </script>
 
 </body>
 </html>
