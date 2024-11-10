@@ -4,8 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>TokenX Website</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <title>TokenX - Cryptocurrency Revolution</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="TokenX - Your gateway to the future of cryptocurrency.">
+    <meta name="keywords" content="cryptocurrency, TokenX, blockchain, digital assets">
+    <meta name="author" content="Your Company Name">
+
+    <!-- Open Graph Meta Tags for social sharing -->
+    <meta property="og:title" content="TokenX - Cryptocurrency Revolution">
+    <meta property="og:description" content="Explore TokenX and join the future of digital assets.">
+    <meta property="og:image" content="link-to-your-thumbnail-image.jpg">
+    <meta property="og:url" content="https://yourwebsite.com">
+    <meta property="og:type" content="website">
+
+    <!-- Favicon -->
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+
+    <!-- AOS for advanced animations -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.css" />
+
+    <!-- CSS Stylesheet -->
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -21,25 +40,25 @@
 
     <!-- Features Section -->
     <section id="features" class="features">
-        <div class="feature fade-in">
+        <div class="feature" data-aos="fade-up">
             <h3>Fast Transactions</h3>
             <p>Our token is designed for fast, secure, and efficient transactions.</p>
         </div>
-        <div class="feature fade-in">
+        <div class="feature" data-aos="fade-up">
             <h3>Global Community</h3>
             <p class="counter">0</p> <!-- Dynamic counter starts at 0 -->
         </div>
-        <div class="feature fade-in">
+        <div class="feature" data-aos="fade-up">
             <h3>Low Fees</h3>
             <p>Experience minimal fees with a revolutionary blockchain system.</p>
         </div>
     </section>
 
     <!-- Modal Popup -->
-    <button id="openModal">Show Announcement</button>
+    <button id="openModal" aria-label="Open announcement modal">Show Announcement</button>
     <div id="myModal" class="modal">
         <div class="modal-content">
-            <span id="closeModal" class="close">&times;</span>
+            <span id="closeModal" class="close" aria-label="Close announcement modal">&times;</span>
             <h2>Important Announcement</h2>
             <p>Join our community and stay updated with the latest news.</p>
         </div>
@@ -56,8 +75,12 @@
     </footer>
 
     <!-- JavaScript for Animations, Counter, and Modal -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.1/dist/aos.js"></script>
     <script>
-        // Scroll Animation
+        // Initialize AOS animations
+        AOS.init();
+
+        // Scroll Animation for Visibility
         document.addEventListener('scroll', function() {
             const elements = document.querySelectorAll('.fade-in');
             const windowHeight = window.innerHeight;
@@ -71,6 +94,7 @@
         });
 
         // Dynamic Counter
+        let hasAnimated = false; // Avoid multiple animations
         function animateCounter(element, endValue) {
             let startValue = 0;
             const duration = 2000;
@@ -91,8 +115,9 @@
             const position = counterElement.getBoundingClientRect().top;
             const windowHeight = window.innerHeight;
 
-            if (position < windowHeight - 100 && counterElement.innerText === '0') {
+            if (position < windowHeight - 100 && !hasAnimated) {
                 animateCounter(counterElement, 10000); // Set your target number here
+                hasAnimated = true;
             }
         });
 
@@ -105,11 +130,26 @@
             document.getElementById('myModal').style.display = 'none';
         };
 
+        // Close modal on outside click or Escape key
         window.onclick = function(event) {
             if (event.target == document.getElementById('myModal')) {
                 document.getElementById('myModal').style.display = 'none';
             }
         };
+        window.onkeydown = function(event) {
+            if (event.key === 'Escape') {
+                document.getElementById('myModal').style.display = 'none';
+            }
+        };
+    </script>
+
+    <!-- Google Analytics tracking code -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_TRACKING_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'YOUR_TRACKING_ID');
     </script>
 
 </body>
